@@ -123,7 +123,11 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
+    finallist = []
+    for i in proteinList1:
+        if i in proteinList2:
+            finallist.append(i)
+    return finallist
 
 
 '''
@@ -240,9 +244,10 @@ if __name__ == "__main__":
     # test.testDnaToRna()
     # test.testMakeCodonDictionary()
     # test.testGenerateProtein()
-    test.testSynthesizeProteins()
+    # test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
+    test.testCommonProteins()
     """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
