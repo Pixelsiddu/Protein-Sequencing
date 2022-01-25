@@ -137,7 +137,11 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def combineProteins(proteinList):
-    return
+    final = []
+    for i in proteinList:
+        for j in i:
+            final.append(j)
+    return final
 
 
 '''
@@ -247,6 +251,7 @@ if __name__ == "__main__":
     # test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
+    # test.testCommonProteins()
     test.testCommonProteins()
     """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
