@@ -86,7 +86,25 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    synlist = []
+    x = readFile(dnaFilename)
+    y = makeCodonDictionary(codonFilename)
+    i = 0
+    unused = 0
+
+    while i < len(x):
+        sli = x[i:i+3]
+        if sli == "ATG":
+            rna = dnaToRna(x, i)
+            prolist = generateProtein(rna, y)
+            synlist.append(prolist)
+            i += 3 * len(prolist)
+        else:
+            i += 1
+            unused += 1
+    print("total number of bases" , len(x), "unused base count", unused, "total number of protiens", len(synlist) )
+    # print(synlist)
+    return synlist
 
 
 def runWeek1():
@@ -221,7 +239,8 @@ if __name__ == "__main__":
     # test.testReadFile()
     # test.testDnaToRna()
     # test.testMakeCodonDictionary()
-    test.testGenerateProtein()
+    # test.testGenerateProtein()
+    test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
     """
