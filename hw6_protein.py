@@ -73,10 +73,11 @@ Returns: list of strs
 def generateProtein(codons, codonD):
     protlist = []
     for i in codons:
-        if i == "AUG" and len(protlist) == 0:
-            protlist.append("Start")
-        else:
-            protlist.append(codonD[i])
+        if i in codonD:
+            if i == "AUG" and len(protlist) == 0:
+                protlist.append("Start")
+            else:
+                protlist.append(codonD[i])
     return protlist
 
 
@@ -127,7 +128,8 @@ def commonProteins(proteinList1, proteinList2):
     finallist = []
     for i in proteinList1:
         if i in proteinList2:
-            finallist.append(i)
+            if i not in finallist: #duplicates
+                finallist.append(i)
     return finallist
 
 
@@ -282,7 +284,7 @@ createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
 Parameters: list of strs ; list of floats ; str ; list of floats ; str ; [optional] list of strs
 Returns: None
 '''
-def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList="black"):
+def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
     import matplotlib.pyplot as plt
 
     w = 0.35  # the width of the bars
@@ -372,7 +374,7 @@ if __name__ == "__main__":
     ## Uncomment these for Week 3 ##
     
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
-    test.week3Tests()
+    # test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
     runFullProgram()
     
