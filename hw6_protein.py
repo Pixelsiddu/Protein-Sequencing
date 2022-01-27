@@ -200,6 +200,27 @@ Parameters: 2D list of strs ; 2D list of values
 Returns: None
 '''
 def displayTextResults(commonalities, differences):
+    l1 = []
+    for i in commonalities:
+        i.remove("Start")
+        i.remove("Stop")    
+        if len(i) > 1:
+            j = "-".join(i)
+            l1.append([j])
+        else:
+            if i not in l1:
+                l1.append(i)
+    l2 = sorted(l1)
+    print("The following proteins occurred in both DNA Sequences:")
+    for a in l2:
+        for b in a:
+            print(b)
+    print("The following amino acids occurred at very different rates in the two DNA sequences:")
+    for val in differences:
+        word = val[0]
+        seq1 = round(val[1] *100,2)
+        seq2 = round(val[2]*100,2)
+        print(f"{word}: {seq1} % in seq1, {seq2} % in seq2")
     return
 
 
@@ -221,6 +242,7 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: list of strs
 '''
 def makeAminoAcidLabels(proteinList1, proteinList2):
+    
     return
 
 
@@ -283,13 +305,13 @@ if __name__ == "__main__":
     # test.testCommonProteins()
     # test.testCommonProteins()
     # test.testAminoAcidDictionary()
-    test.testFindAminoAcidDifferences()
-    """
+    # test.testFindAminoAcidDifferences()
+    
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
+    # test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     runWeek2()
-    """
+    
 
     ## Uncomment these for Week 3 ##
     """
