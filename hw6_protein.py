@@ -17,7 +17,10 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    file = open(filename, "r").read()
+    split = file.splitlines()
+    string = "".join(split)
+    return string
 
 
 '''
@@ -27,7 +30,19 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    rnalist = []
+    stoplist = ["UAA", "UGA", "UAG"]
+    dna1 = dna[startIndex:]
+    dna2 = dna1.replace("T", "U")
+
+    for i in range(0,len(dna2),3):
+        rn = dna2[i:i+3]
+        if rn in stoplist:
+            rnalist.append(rn)
+            break
+        rnalist.append(rn)
+
+    return rnalist
 
 
 '''
@@ -37,8 +52,15 @@ Parameters: str
 Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
+    dic = {}
     import json
-    return
+    f = open(filename)
+    data = json.load(f)
+    for key,values in data.items():
+        for i in values:
+            re= i.replace("T", "U")
+            dic[re] = key
+    return dic
 
 
 '''
@@ -48,7 +70,14 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    protlist = []
+    for i in codons:
+        if i in codonD:
+            if i == "AUG" and len(protlist) == 0:
+                protlist.append("Start")
+            else:
+                protlist.append(codonD[i])
+    return protlist
 
 
 '''
@@ -186,10 +215,14 @@ def runFullProgram():
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # runWeek1()
+    # test.testReadFile()
+    # test.testDnaToRna()
+    # test.testMakeCodonDictionary()
+    test.testGenerateProtein()
 
     ## Uncomment these for Week 2 ##
     """
