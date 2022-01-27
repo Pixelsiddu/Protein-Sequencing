@@ -72,7 +72,7 @@ Returns: list of strs
 def generateProtein(codons, codonD):
     protlist = []
     for i in codons:
-        if i not in protlist:
+        if i in codonD:
             if i == "AUG" and len(protlist) == 0:
                 protlist.append("Start")
             else:
