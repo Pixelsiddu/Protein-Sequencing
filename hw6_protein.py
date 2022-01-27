@@ -17,7 +17,10 @@ Parameters: str
 Returns: str
 '''
 def readFile(filename):
-    return
+    file = open(filename, "r").read()
+    split = file.splitlines()
+    string = "".join(split)
+    return string
 
 
 '''
@@ -27,7 +30,19 @@ Parameters: str ; int
 Returns: list of strs
 '''
 def dnaToRna(dna, startIndex):
-    return
+    rnalist = []
+    stoplist = ["UAA", "UGA", "UAG"]
+    dna1 = dna[startIndex:]
+    dna2 = dna1.replace("T", "U")
+
+    for i in range(0,len(dna2),3):
+        rn = dna2[i:i+3]
+        if rn in stoplist:
+            rnalist.append(rn)
+            break
+        rnalist.append(rn)
+
+    return rnalist
 
 
 '''
@@ -37,8 +52,15 @@ Parameters: str
 Returns: dict mapping strs to strs
 '''
 def makeCodonDictionary(filename):
+    dic = {}
     import json
-    return
+    f = open(filename)
+    data = json.load(f)
+    for key,values in data.items():
+        for i in values:
+            re= i.replace("T", "U")
+            dic[re] = key
+    return dic
 
 
 '''
@@ -48,7 +70,13 @@ Parameters: list of strs ; dict mapping strs to strs
 Returns: list of strs
 '''
 def generateProtein(codons, codonD):
-    return
+    protlist = []
+    for i in codons:
+        if i == "AUG" and len(protlist) == 0:
+            protlist.append("Start")
+        else:
+            protlist.append(codonD[i])
+    return protlist
 
 
 '''
@@ -58,7 +86,25 @@ Parameters: str ; str
 Returns: 2D list of strs
 '''
 def synthesizeProteins(dnaFilename, codonFilename):
-    return
+    synlist = []
+    x = readFile(dnaFilename)
+    y = makeCodonDictionary(codonFilename)
+    i = 0
+    unused = 0
+
+    while i < len(x):
+        sli = x[i:i+3]
+        if sli == "ATG":
+            rna = dnaToRna(x, i)
+            prolist = generateProtein(rna, y)
+            synlist.append(prolist)
+            i += 3 * len(prolist)
+        else:
+            i += 1
+            unused += 1
+    print("total number of bases" , len(x), "unused base count", unused, "total number of protiens", len(synlist) )
+    # print(synlist)
+    return synlist
 
 
 def runWeek1():
@@ -77,7 +123,11 @@ Parameters: 2D list of strs ; 2D list of strs
 Returns: 2D list of strs
 '''
 def commonProteins(proteinList1, proteinList2):
-    return
+    finallist = []
+    for i in proteinList1:
+        if i in proteinList2:
+            finallist.append(i)
+    return finallist
 
 
 '''
@@ -87,7 +137,11 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def combineProteins(proteinList):
-    return
+    final = []
+    for i in proteinList:
+        for j in i:
+            final.append(j)
+    return final
 
 
 '''
@@ -186,12 +240,19 @@ def runFullProgram():
 
 # This code runs the test cases to check your work
 if __name__ == "__main__":
-    print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    runWeek1()
+    # print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
+    # test.week1Tests()
+    # print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    # runWeek1()
+    # test.testReadFile()
+    # test.testDnaToRna()
+    # test.testMakeCodonDictionary()
+    # test.testGenerateProtein()
+    # test.testSynthesizeProteins()
 
     ## Uncomment these for Week 2 ##
+    # test.testCommonProteins()
+    test.testCommonProteins()
     """
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     test.week2Tests()
