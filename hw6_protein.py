@@ -305,8 +305,19 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    
-    return
+    # print(biggestDiffs)
+    diff = []
+    for i in biggestDiffs:
+        diff.append(i[0])
+    # print(diff)
+    l1 = []
+    for i in labels:
+        if i in diff:
+            l1.append("black")
+        else:
+            l1.append("white")
+    # print(l1)
+    return l1
 
 
 '''
@@ -338,7 +349,8 @@ if __name__ == "__main__":
     # test.testCommonProteins()
     # test.testAminoAcidDictionary()
     # test.testFindAminoAcidDifferences()
-    test.testCreateChart()
+    # test.testCreateChart()
+    test.testMakeEdgeList()
     
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     # test.week2Tests()
