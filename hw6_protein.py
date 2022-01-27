@@ -126,7 +126,8 @@ def commonProteins(proteinList1, proteinList2):
     finallist = []
     for i in proteinList1:
         if i in proteinList2:
-            finallist.append(i)
+            if i not in finallist:
+                finallist.append(i)
     return finallist
 
 
