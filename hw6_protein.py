@@ -282,17 +282,17 @@ createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None)
 Parameters: list of strs ; list of floats ; str ; list of floats ; str ; [optional] list of strs
 Returns: None
 '''
-def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList=None):
+def createChart(xLabels, freqList1, label1, freqList2, label2, edgeList="black"):
     import matplotlib.pyplot as plt
 
     w = 0.35  # the width of the bars
 
-    plt.bar(xLabels, freqList1, width=-w, align='edge', label=label1)
-    plt.bar(xLabels, freqList2, width= w, align='edge', label=label2)
+    plt.bar(xLabels, freqList1, width=-w, align='edge', label=label1, edgecolor= edgeList)
+    plt.bar(xLabels, freqList2, width= w, align='edge', label=label2, edgecolor= edgeList)
 
     plt.xticks(rotation="vertical")
     plt.legend()
-    plt.title("Compare lables")
+    plt.title("Compare Human and Elephant")
 
     plt.show()
     return
@@ -305,18 +305,15 @@ Parameters: list of strs ; 2D list of values
 Returns: list of strs
 '''
 def makeEdgeList(labels, biggestDiffs):
-    # print(biggestDiffs)
     diff = []
     for i in biggestDiffs:
         diff.append(i[0])
-    # print(diff)
     l1 = []
     for i in labels:
         if i in diff:
             l1.append("black")
         else:
             l1.append("white")
-    # print(l1)
     return l1
 
 
@@ -327,6 +324,17 @@ Parameters: no parameters
 Returns: None
 '''
 def runFullProgram():
+
+    proteins1 = synthesizeProteins("data/Human_p53.txt", "data/codon_table.json")
+    proteins2 = synthesizeProteins("data/Elephant_p53.txt", "data/codon_table.json")
+    common = commonProteins(proteins1, proteins2)
+    amodif = findAminoAcidDifferences(proteins1,proteins2,0.005)
+    disply = displayTextResults(common, amodif)
+    labels = makeAminoAcidLabels(proteins1,proteins2)
+    f1 = setupChartData(labels, proteins1)
+    f2 = setupChartData(labels, proteins2)
+    edges = makeEdgeList(labels, amodif)
+    createChart(labels, f1, "Human", f2, "Elephant", edgeList=edges)
     return
 
 
@@ -350,7 +358,8 @@ if __name__ == "__main__":
     # test.testAminoAcidDictionary()
     # test.testFindAminoAcidDifferences()
     # test.testCreateChart()
-    test.testMakeEdgeList()
+    # test.testMakeEdgeList()
+    
     
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
     # test.week2Tests()
@@ -363,7 +372,7 @@ if __name__ == "__main__":
     ## Uncomment these for Week 3 ##
     
     print("\n" + "#"*15 + " WEEK 3 TESTS " +  "#" * 16 + "\n")
-    # test.week3Tests()
+    test.week3Tests()
     print("\n" + "#"*15 + " WEEK 3 OUTPUT " + "#" * 15 + "\n")
-    # runFullProgram()
+    runFullProgram()
     
